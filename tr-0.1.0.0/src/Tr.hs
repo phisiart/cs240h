@@ -14,13 +14,14 @@ type CharSet = String
 
 -- makeMap
 makeMap :: CharSet -> CharSet -> [(Char, Char)]
-makeMap [] (v : []) = []
+makeMap _ [] = error "wat"
+makeMap [] _ = []
 makeMap (k : ks) (v : []) = (k, v) : (makeMap ks (v : []))
 makeMap (k : ks) (v0 : v1 : vs) = (k, v0) : (makeMap ks (v1 : vs))
 
 -- replaceMode
 replaceMode :: [(Char, Char)] -> CharSet -> CharSet
-replaceMode lookupTable [] = []
+replaceMode _ [] = []
 replaceMode lookupTable (k : ks) = (case lookup k lookupTable of
                                       Just v -> v
                                       Nothing -> k
@@ -28,7 +29,7 @@ replaceMode lookupTable (k : ks) = (case lookup k lookupTable of
 
 -- deleteMode
 deleteMode :: [Char] -> CharSet -> CharSet
-deleteMode dict [] = []
+deleteMode _ [] = []
 deleteMode dict (k : ks) | elem k dict = deleteMode dict ks
                          | otherwise = k : (deleteMode dict ks)
 
